@@ -47,6 +47,7 @@ repositories {
         }
     }
     mavenLocal()
+    maven { url 'https://jitpack.io' }
 }
 
 configurations.all {
@@ -92,6 +93,7 @@ dependencies {
 
         def akitJson = new groovy.json.JsonSlurper().parseText(new File(projectDir.getAbsolutePath() + "/vendordeps/AdvantageKit.json").text)
     annotationProcessor "org.littletonrobotics.akit.junction:junction-autolog:$akitJson.version"
+      implementation 'com.github.7849-Davinci-s-Creation:7849Lib:1.1.0'
 }
 
 test {
