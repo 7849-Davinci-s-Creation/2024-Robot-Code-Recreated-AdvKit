@@ -4,8 +4,15 @@
 
 package frc.robot;
 
+import org.littletonrobotics.junction.LogFileUtil;
 import org.littletonrobotics.junction.LoggedRobot;
+import org.littletonrobotics.junction.Logger;
+import org.littletonrobotics.junction.networktables.NT4Publisher;
+import org.littletonrobotics.junction.wpilog.WPILOGReader;
+import org.littletonrobotics.junction.wpilog.WPILOGWriter;
 
+import edu.wpi.first.wpilibj.PowerDistribution;
+import edu.wpi.first.wpilibj.PowerDistribution.ModuleType;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 
@@ -18,6 +25,25 @@ public class Robot extends LoggedRobot {
 
   @Override
   public void robotInit() {
+    Logger.recordMetadata("2024RobotAdvKit", "2024Robot");  
+
+    if (isReal()) {
+      Logger.addDataReceiver(new NT4Publisher());
+
+      new PowerDistribution(Constants.PDPConstants.pdpcid, ModuleType.kCTRE);
+
+    } else {
+      setUseTiming(false);
+      
+      String logPath = LogFileUtil.findReplayLog();
+
+      Logger.setReplaySource(new WPILOGReader(logPath));
+
+      Logger.addDataReceiver(new WPILOGWriter(LogFileUtil.addPathSuffix(logPath, "_sim")));
+    }
+
+    Logger.start();
+
     m_robotContainer = new RobotContainer();
   }
 
