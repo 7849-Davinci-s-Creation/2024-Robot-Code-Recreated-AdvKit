@@ -91,9 +91,11 @@ dependencies {
     testImplementation 'org.junit.jupiter:junit-jupiter:5.10.1'
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 
-        def akitJson = new groovy.json.JsonSlurper().parseText(new File(projectDir.getAbsolutePath() + "/vendordeps/AdvantageKit.json").text)
+    def akitJson = new groovy.json.JsonSlurper().parseText(new File(projectDir.getAbsolutePath() + "/vendordeps/AdvantageKit.json").text)
+    
     annotationProcessor "org.littletonrobotics.akit.junction:junction-autolog:$akitJson.version"
-      implementation 'com.github.7849-Davinci-s-Creation:7849Lib:1.1.0'
+
+    implementation 'com.github.7849-Davinci-s-Creation:7849Lib:1.1.0'
 }
 
 test {
